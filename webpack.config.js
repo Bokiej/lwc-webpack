@@ -14,9 +14,11 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
+        synteticShadow: "@lwc/synthetic-shadow", // needed for lightning-base-components
         index: {
             import: './src/index.js',
-            filename: 'index.js'
+            filename: 'index.js',
+            dependOn: 'synteticShadow'
         }
     },
     output: {
@@ -41,7 +43,7 @@ module.exports = {
                     from: path.resolve(__dirname, PATH_SRC_ASSETS),
                     to: path.resolve(__dirname, PATH_DIST_ASSETS)
                 },
-                {
+                {   // needed for lightning-base-components
                     from: './node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css',
                     to: "assets/css/salesforce-lightning-design-system.min.css"
                 }
