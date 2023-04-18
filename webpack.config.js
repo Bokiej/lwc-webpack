@@ -1,9 +1,10 @@
 const path = require('path');
 
-const PATH_DIST = path.resolve(__dirname, 'dist');
-const PATH_DIST_ASSETS = path.resolve(__dirname, 'dist/assets');
-const PATH_SRC_ASSETS = path.resolve(__dirname, 'src/assets');
-const EXCLUDE = /node_modules/;
+const PATH_SRC = 'src';
+const PATH_DIST = 'dist';
+const PATH_ASSETS = 'assets';
+const PATH_SRC_ASSETS =  PATH_SRC + '/' + PATH_ASSETS;
+const PATH_DIST_ASSETS = PATH_DIST + '/' + PATH_ASSETS;
 
 // PLUGINS
 const LwcWebpackPlugin = require('lwc-webpack-plugin');
@@ -13,11 +14,13 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
-        index: './src/index.js'
+        index: {
+            import: './src/index.js'
+        }
     },
     output: {
         filename: '[name].[contenthash].js',
-        path: PATH_DIST,
+        path: path.resolve(__dirname, PATH_DIST),
         clean: true
     },
     devServer: {
@@ -34,20 +37,28 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 {
-                    from: PATH_SRC_ASSETS,
-                    to: PATH_DIST_ASSETS
+                    from: path.resolve(__dirname, PATH_SRC_ASSETS),
+                    to: path.resolve(__dirname, PATH_DIST_ASSETS)
                 }
             ]
         }),
-        new LwcWebpackPlugin()
+        new LwcWebpackPlugin({
+            modules: [
+                { dir: 'src/modules' }
+            ]
+        })
     ],
     module: {
         rules: [
             {
                 test: /\.css$/i,
+                exclude: [
+                    /node_modules/,
+                    /modules/
+                ],
                 use: [
                     MiniCssExtractPlugin.loader,
-                    { loader: "css-loader", options: { modules: true } }
+                    'css-loader'
                 ]
             },
             {

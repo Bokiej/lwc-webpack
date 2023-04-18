@@ -1,0 +1,18 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+img {
+    width: 150px;
+    height: 150px;
+}
+
+h1 {
+    color: #ffc146;
+}
+
+p {
+    color: #6fccf5;
+}
