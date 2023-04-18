@@ -20,5 +20,9 @@
     "webpack": "^5.79.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.13.3"
+  },
+  "dependencies": {
+    "@salesforce-ux/design-system": "^2.20.1",
+    "lightning-base-components": "^1.18.1-alpha"
   }
 }

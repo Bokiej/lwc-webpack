@@ -15,11 +15,12 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: {
         index: {
-            import: './src/index.js'
+            import: './src/index.js',
+            filename: 'index.js'
         }
     },
     output: {
-        filename: '[name].[contenthash].js',
+        filename: PATH_ASSETS + '/js/[name].[contenthash].js',
         path: path.resolve(__dirname, PATH_DIST),
         clean: true
     },
@@ -39,12 +40,17 @@ module.exports = {
                 {
                     from: path.resolve(__dirname, PATH_SRC_ASSETS),
                     to: path.resolve(__dirname, PATH_DIST_ASSETS)
+                },
+                {
+                    from: './node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css',
+                    to: "assets/css/salesforce-lightning-design-system.min.css"
                 }
             ]
         }),
         new LwcWebpackPlugin({
             modules: [
-                { dir: 'src/modules' }
+                { dir: 'src/modules' },
+                { npm: 'lightning-base-components' }
             ]
         })
     ],
