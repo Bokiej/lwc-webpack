@@ -4,6 +4,14 @@
     align-items: center;
 }
 
+:host > * {
+    margin-top: 10px;
+}
+
+:host:first-child {
+    margin-top: 0;
+}
+
 img {
     width: 150px;
     height: 150px;
