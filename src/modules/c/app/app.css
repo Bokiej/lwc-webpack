@@ -24,3 +24,8 @@ h1 {
 p {
     color: #6fccf5;
 }
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
