@@ -8,6 +8,8 @@ const PATH_DIST_ASSETS = PATH_DIST + '/' + PATH_ASSETS;
 
 // PLUGINS
 const LwcWebpackPlugin = require('lwc-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const { NormalModuleReplacementPlugin } = require('webpack'); // use to remove icons
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -24,6 +26,7 @@ module.exports = {
     output: {
         filename: PATH_ASSETS + '/js/[name].[contenthash].js',
         path: path.resolve(__dirname, PATH_DIST),
+        assetModuleFilename: PATH_ASSETS + '/img/[name].[contenthash][ext][query]',
         clean: true
     },
     devServer: {
@@ -33,6 +36,12 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin(),
+        new BundleAnalyzerPlugin(),
+        // // use to remove icons
+        // new NormalModuleReplacementPlugin(
+        //     new RegExp('.*iconSvgTemplates.*'),
+        //     path.resolve(__dirname, 'node_modules/lightning-base-components/src/lightning/iconSvgTemplatesUtility/buildTemplates/utility/up.html')
+        // ),
         new HtmlWebpackPlugin({
             template: './src/index.html',
             filename: 'index.html'
@@ -70,7 +79,7 @@ module.exports = {
                 ]
             },
             {
-                test: /.(png|jpeg|gif|svg)$/,
+                test: /.(png|jpeg|gif|svg)$/i,
                 type: "asset/resource",
               }
         ]
